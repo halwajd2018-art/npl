@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block crumb %}تعديل بيانات الملف{% endblock %}
+{% block content %}
+<div class="page-header"><div><h1>تعديل بيانات الملف</h1><p>تعديل الفترة المرجعية فقط؛ تغيير محتوى الملف يتطلب حذفه وإعادة رفع النسخة الصحيحة.</p></div><a href="/files" class="btn btn-light">العودة</a></div>
+<div class="panel narrow"><div class="panel-head"><h2>{{item.original_name}}</h2></div>{% if error %}<div class="alert error">{{error}}</div>{% endif %}
+<form method="post" action="/uploads/{{item.id}}/edit" class="stack-form"><input type="hidden" name="csrf_token" value="{{csrf}}"><label>الفترة المرجعية<input name="reference_period" required value="{{item.reference_period}}" dir="ltr"></label><div class="alert info">نسخة الملف {{item.id[:14]}} · تم رفعه بتاريخ {{item.uploaded_at|time_sa}}</div><button class="btn btn-primary" type="submit">حفظ التعديل</button></form></div>
+{% endblock %}

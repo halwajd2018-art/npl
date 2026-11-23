@@ -1,0 +1,15 @@
+services:
+  adf-reports:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:8000:8000'
+    environment:
+      APP_ENV: production
+      DATA_DIR: /site/data
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET to a long random value}
+      MAX_UPLOAD_MB: '130'
+    volumes:
+      - adf_reports_data:/site/data
+volumes:
+  adf_reports_data:

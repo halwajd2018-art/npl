@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}تسجيل الدخول{% endblock %}
+{% block unauth %}
+<div class="login-layout"><section class="login-art"><div class="login-art-inner"><div class="login-logo">✳</div><p class="eyebrow">صندوق التنمية الزراعية</p><h1>منصة موحّدة<br>للتقارير والتحليلات</h1><p>راقب نشاط الفروع، وصنّف السداد، وتتبّع معالجات العقود المشطوبة في بيئة موثوقة ومراقبة الصلاحيات.</p><div class="login-art-bottom">تحليل موثق حسب تاريخ الرفع والفترة المرجعية <span>◈</span></div></div></section>
+<section class="login-form-wrap"><form class="login-form" method="post" action="/login"><div class="login-small-mark">✳</div><p class="eyebrow">مرحباً بعودتك</p><h2>تسجيل الدخول</h2><p class="muted">أدخل بيانات المستخدم المصرح له للوصول إلى المنصة.</p>
+ {% if error %}<div class="alert error">{{error}}</div>{% endif %}
+ {% if not has_admin %}<div class="alert warning">لا يوجد مدير للموقع حتى الآن. أنشئ حساب المدير باستخدام أمر الإعداد الموضح في README.</div>{% endif %}
+ <label>اسم المستخدم<input name="username" required autocomplete="username" placeholder="اسم المستخدم" autofocus></label>
+ <label>كلمة المرور<input name="password" type="password" required autocomplete="current-password" placeholder="••••••••••••"></label>
+ <input type="hidden" name="csrf_token" value="{{csrf}}"><button class="btn btn-primary btn-wide" type="submit">تسجيل الدخول <span>←</span></button>
+ <p class="login-help">الوصول يقتصر على المستخدمين المعتمدين من مدير النظام.</p>
+ </form></section></div>
+{% endblock %}

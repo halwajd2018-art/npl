@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block crumb %}الرئيسية{% endblock %}
+{% block content %}
+<div class="page-header"><div><div class="eyebrow">لوحة التحكم الرئيسية</div><h1>نظرة عامة على التقارير</h1><p>إدارة الملفات المصدرية وتتبّع تقارير التحصيل ومعالجة القروض المتعثرة، مع توثيق كل نسخة.</p></div>{% if 'upload' in permissions %}<a class="btn btn-primary" href="/uploads/new">＋ رفع ملف جديد</a>{% endif %}</div>
+<div class="stat-grid">
+ <div class="stat-card"><div class="stat-top"><span>ملفات مرفوعة حالياً</span><span class="stat-icon">▤</span></div><div class="stat-number">{{uploads|length if uploads|length<8 else by_kind.values()|sum }}</div><div class="stat-note">نسخ مصدرية مستقلة ومسجلة</div></div>
+ <div class="stat-card"><div class="stat-top"><span>التقارير التشغيلية</span><span class="stat-icon">◫</span></div><div class="stat-number">03</div><div class="stat-note">نشاط الفروع، التصنيف، الشطب</div></div>
+ <div class="stat-card"><div class="stat-top"><span>مستخدمون نشطون</span><span class="stat-icon">♧</span></div><div class="stat-number">{{totals.users}}</div><div class="stat-note">صلاحيات مشاهدة وإضافة وتعديل</div></div>
+ <div class="stat-card"><div class="stat-top"><span>عمليات مدققة</span><span class="stat-icon">◷</span></div><div class="stat-number">{{totals.recent_audits}}</div><div class="stat-note">تسجيل الإضافة والتعديل والحذف</div></div>
+</div>
+<div class="section-heading"><div><h2>التقارير المتاحة</h2><p>اختر التقرير، ثم حدد النسخ المصدرية المستخدمة في التحليل.</p></div></div>
+<div class="report-cards">
+ <a href="/reports/1" class="report-card"><div class="report-card-icon green">▥</div><span class="report-code">RPT-01</span><h3>نشاط الفروع والتحصيل النقدي</h3><p>مقارنة المحصل الفعلي بمستهدفات بداية العام، مع إظهار مبادرة الأمن الغذائي بصورة مستقلة.</p><div class="report-foot"><span>{{by_kind.branch_pdf}} ملفات PDF · {{by_kind.targets}} مستهدفات</span><b>عرض التقرير ↖</b></div></a>
+ <a href="/reports/2" class="report-card"><div class="report-card-icon gold">▤</div><span class="report-code">RPT-02</span><h3>تصنيف السداد حسب القطاع</h3><p>ربط حركة السداد برقم العقد ونوع القرض، ثم تصنيف المبالغ وفق القطاع الأساسي.</p><div class="report-foot"><span>{{by_kind.payments}} حركات · {{by_kind.classification}} تصنيفات</span><b>عرض التقرير ↖</b></div></a>
+ <a href="/reports/3" class="report-card"><div class="report-card-icon blue">⇆</div><span class="report-code">RPT-03</span><h3>معالجات العقود المشطوبة</h3><p>مقارنة الأرصدة والمستحقات، والسداد الجزئي والكلي، وإعادة الجدولة، ونقل الدين.</p><div class="report-foot"><span>{{by_kind.portfolio}} محافظ · {{by_kind.rescheduling}} جداول</span><b>عرض التقرير ↖</b></div></a>
+</div>
+<div class="panel"><div class="panel-head"><div><h2>أحدث الملفات المرفوعة</h2><p>تاريخ الرفع يختلف عن الفترة المرجعية المستخدمة في التقارير.</p></div><a href="/files" class="text-link">إدارة جميع الملفات ←</a></div>
+{% if uploads %}<div class="table-scroll"><table><thead><tr><th>النوع</th><th>الملف</th><th>الفترة المرجعية</th><th>تاريخ الرفع</th><th>عدد السجلات</th></tr></thead><tbody>{% for item in uploads %}<tr><td><span class="type-pill">{{kinds[item.kind]}}</span></td><td class="filename">{{item.original_name}}</td><td><b>{{item.reference_period}}</b></td><td>{{item.uploaded_at|time_sa}}</td><td>{{item.row_count|integer}}</td></tr>{% endfor %}</tbody></table></div>
+{% else %}<div class="empty"><div class="empty-icon">▤</div><h3>لم يتم رفع أي ملف بعد</h3><p>ابدأ من شاشة رفع الملفات لإضافة مصادر التقارير وتحليلها.</p>{% if 'upload' in permissions %}<a class="btn btn-primary" href="/uploads/new">رفع الملف الأول</a>{% endif %}</div>{% endif %}
+</div>
+{% endblock %}

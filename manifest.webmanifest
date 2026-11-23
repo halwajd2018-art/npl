@@ -1,0 +1,24 @@
+{
+  "id": "/?app=adf-mobile",
+  "name": "منصة تقارير صندوق التنمية الزراعية",
+  "short_name": "تقارير ADF",
+  "description": "تقارير الفروع والتحصيل والقروض المشطوبة - واجهة مؤسسية",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "display": "standalone",
+  "background_color": "#f5f7f6",
+  "theme_color": "#123e34",
+  "orientation": "any",
+  "icons": [
+    {"src":"/static/app-icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"/static/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"نشاط الفروع","url":"/reports/1"},
+    {"name":"تصنيف السداد","url":"/reports/2"},
+    {"name":"العقود المشطوبة","url":"/reports/3"},
+    {"name":"رفع ملف","url":"/uploads/new"}
+  ]
+}

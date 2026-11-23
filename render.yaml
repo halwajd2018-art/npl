@@ -1,0 +1,29 @@
+# Demonstration environment only. Get information-security approval before
+# handling real customer/credit data on an external hosting provider.
+services:
+  - type: web
+    name: adf-reports-phase1
+    runtime: python
+    plan: standard
+    region: frankfurt
+    autoDeployTrigger: off
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: MAX_UPLOAD_MB
+        value: "130"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: INITIAL_ADMIN_USERNAME
+        sync: false
+      - key: INITIAL_ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: adf-reports-data
+      mountPath: /var/data
+      sizeGB: 5

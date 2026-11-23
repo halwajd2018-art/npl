@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10382f"><title>{% block title %}منصة تقارير الفروع والتحصيل{% endblock %} | صندوق التنمية الزراعية</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/png" href="/static/app-icon-192.png">
+  <link rel="apple-touch-icon" href="/static/app-icon-192.png">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+{% if user %}
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-mark">✳</div><div><div class="brand-name">صندوق التنمية الزراعية</div><div class="brand-sub">منصة التقارير والتحصيل</div></div></div>
+ <div class="side-label">مساحة العمل</div>
+ <nav class="nav">
+ <a href="/" class="nav-item {% if request.url.path=='/' %}active{% endif %}"><span class="nav-icon">▦</span> الرئيسية</a>
+ <a href="/reports/1" class="nav-item {% if request.url.path=='/reports/1' %}active{% endif %}"><span class="nav-icon">◫</span> نشاط الفروع</a>
+ <a href="/reports/2" class="nav-item {% if request.url.path=='/reports/2' %}active{% endif %}"><span class="nav-icon">◩</span> تصنيف السداد</a>
+ <a href="/reports/3" class="nav-item {% if request.url.path=='/reports/3' %}active{% endif %}"><span class="nav-icon">◇</span> العقود المشطوبة</a>
+ <div class="side-label">إدارة المصادر</div>
+ <a href="/files" class="nav-item {% if request.url.path=='/files' %}active{% endif %}"><span class="nav-icon">▤</span> الملفات والنسخ</a>
+ {% if 'upload' in permissions %}<a href="/uploads/new" class="nav-item {% if request.url.path=='/uploads/new' %}active{% endif %}"><span class="nav-icon">⊕</span> رفع ملف جديد</a>{% endif %}
+ {% if 'users' in permissions %}
+ <div class="side-label">التحكم والصلاحيات</div>
+ <a href="/admin/users" class="nav-item {% if request.url.path=='/admin/users' %}active{% endif %}"><span class="nav-icon">♙</span> إدارة المستخدمين</a>
+ <a href="/admin/audit" class="nav-item {% if request.url.path=='/admin/audit' %}active{% endif %}"><span class="nav-icon">◷</span> سجل العمليات</a>
+ {% endif %}
+ </nav>
+ <div class="sidebar-footer"><span class="foot-dot"></span> المرحلة الأولى · 3 تقارير</div>
+</aside>
+<div class="page-shell">
+ <header class="topbar"><button type="button" class="menu-btn" id="menu-toggle" aria-label="القائمة">☰</button><div class="breadcrumb">منصة التحليل <span class="sep">/</span> <b>{% block crumb %}الرئيسية{% endblock %}</b></div><div class="top-spacer"></div><span class="top-user"><span class="avatar">{{user.display_name[0]}}</span><span>{{user.display_name}}</span></span><form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{csrf}}"><button type="submit" class="logout" title="تسجيل الخروج">خروج ↗</button></form></header>
+ <main class="main">{% block content %}{% endblock %}</main>
+ <footer class="main-footer">منصة تقارير صندوق التنمية الزراعية · النتائج تعتمد حصراً على الملفات المختارة ونسخها المرجعية · جميع الأوقات بتوقيت الرياض</footer>
+</div>
+{% else %}{% block unauth %}{% endblock %}{% endif %}
+</body></html>
